@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#061326"><meta name="description" content="Your personal JARVIS assistant">
+<link rel="manifest" href="manifest.webmanifest">
+<title>J.A.R.V.I.S.</title>
+<style>
+:root{--bg:#030914;--panel:#0b1b31;--cyan:#42ddff;--blue:#167dff;--muted:#92a9c5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 10%,#102b4b 0,#061326 42%,#02050c 100%);color:#f4f9ff;font-family:system-ui,Segoe UI,sans-serif;min-height:100vh}
+header{padding:22px 18px 10px;display:flex;justify-content:space-between;align-items:center}.eyebrow{font-size:10px;letter-spacing:3px;color:#77cde7}.brand{font-size:27px;letter-spacing:4px;font-weight:800}.status{font-size:10px;color:var(--cyan);border:1px solid #1d7392;border-radius:20px;padding:7px 10px}
+main{max-width:720px;margin:auto;padding:0 16px 32px}.core{height:190px;display:grid;place-items:center;position:relative}.rings{width:156px;height:156px;border:1px solid #39d9ff77;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 28px #148dca33,inset 0 0 24px #148dca22;position:relative}.rings:before,.rings:after{content:"";position:absolute;border:2px solid #167dff99;border-radius:50%;inset:13px;transform:rotate(35deg) scaleX(.86)}.rings:after{inset:27px;border:1px dashed var(--cyan);transform:rotate(-25deg) scaleX(.9)}.coreletter{font-size:66px;color:var(--cyan);font-weight:200;text-shadow:0 0 18px #39d9ff}.online{text-align:center;color:var(--cyan);font-size:10px;letter-spacing:2px;margin-top:-5px}
+.pills{display:flex;justify-content:space-around;gap:8px;margin:16px 0}.pill{background:#0b1d36;border:1px solid #39d9ff44;border-radius:10px;padding:9px 12px;text-align:center;flex:1}.pill small{display:block;color:var(--muted);font-size:9px;letter-spacing:1px}.pill b{color:var(--cyan);font-size:11px}
+.section{color:var(--cyan);font-size:11px;letter-spacing:2px;margin:18px 2px 8px}.chat{height:30vh;min-height:190px;max-height:330px;overflow:auto;background:#0b1830bb;border:1px solid #39d9ff33;border-radius:16px;padding:12px}.msg{margin:8px 0;max-width:90%}.msg.user{margin-left:auto;text-align:right}.who{font-size:9px;letter-spacing:2px;color:var(--cyan);margin-bottom:3px}.bubble{display:inline-block;text-align:left;padding:10px 12px;border-radius:12px;background:#10243d;line-height:1.4;font-size:14px;white-space:pre-wrap}.user .bubble{background:#17345a}
+.compose{display:flex;gap:8px;margin-top:10px}.compose input,.field{min-width:0;flex:1;background:#08172a;color:white;border:1px solid #39d9ff55;border-radius:26px;padding:14px;font-size:15px;outline:none}.btn{border:0;border-radius:24px;background:#0d4775;color:white;padding:12px 16px;font-weight:700}.btn.primary{background:linear-gradient(120deg,#07518a,#167dff)}.btn:active{transform:scale(.98)}.wide{width:100%;margin-top:9px}.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.tool{background:#0b1d36;border:1px solid #39d9ff33;color:#e9f8ff;padding:13px;border-radius:12px;text-align:left}.tool strong{display:block;color:var(--cyan);font-size:13px}.tool span{font-size:11px;color:var(--muted)}
+.panel{background:#0b1830cc;border:1px solid #39d9ff33;border-radius:15px;padding:14px;margin-top:10px}.row{display:flex;gap:8px;align-items:center;margin:8px 0}.row input,.row select{flex:1;min-width:0}.small{font-size:12px;color:var(--muted);line-height:1.5}.category{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffffff16;padding:10px 0}.category:last-child{border:0}.category button{padding:7px 10px}.hidden{display:none}.tabs{display:flex;gap:8px;overflow:auto;margin:14px 0}.tab{white-space:nowrap;background:#0b1d36;color:#b9d4eb;border:1px solid #39d9ff33;border-radius:18px;padding:8px 12px}.tab.active{background:#0d4775;color:white;border-color:var(--cyan)}
+a{color:var(--cyan)}footer{text-align:center;color:#68829f;font-size:10px;padding:20px}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">STARK INDUSTRIES • PERSONAL AI</div><div class="brand">J.A.R.V.I.S.</div></div><div class="status" id="status">SYSTEM ONLINE</div></header>
+<main>
+<div class="core"><div class="rings"><div class="coreletter">J</div></div></div><div class="online" id="coreStatus">● READY WHEN YOU ARE</div>
+<div class="pills"><div class="pill"><small>VOICE</small><b id="voiceState">READY</b></div><div class="pill"><small>MEMORY</small><b>ON DEVICE</b></div><div class="pill"><small>AI LINK</small><b id="aiState">OPTIONAL</b></div></div>
+<div class="section">ASSISTANT CONSOLE</div><div class="chat" id="chat" aria-live="polite"></div>
+<div class="compose"><input id="message" placeholder="Talk to JARVIS…" autocomplete="off"><button class="btn primary" id="send">SEND</button></div>
+<div class="row"><button class="btn wide" id="mic">🎙 TAP TO SPEAK</button><button class="btn" id="stop">■</button></div>
+<div class="tabs"><button class="tab active" data-tab="home">Home</button><button class="tab" data-tab="search">Category search</button><button class="tab" data-tab="settings">Customize</button></div>
+<section id="home">
+<div class="section">QUICK COMMANDS</div><div class="tools">
+<button class="tool" data-command="What time is it?"><strong>🕒 Time</strong><span>Current device time</span></button>
+<button class="tool" data-command="What is today's date?"><strong>📅 Date</strong><span>Today's date</span></button>
+<button class="tool" data-command="Tell me a joke"><strong>😄 Tell a joke</strong><span>Lighten the mood</span></button>
+<button class="tool" data-command="Help"><strong>❔ Help</strong><span>See what I can do</span></button>
+</div></section>
+<section id="search" class="hidden"><div class="section">YOUR SEARCH CATEGORIES</div><p class="small">Choose a category to search the web. Add your own categories in Customize. Search opens your browser with the selected query.</p><div id="categorySearch"></div></section>
+<section id="settings" class="hidden">
+<div class="section">PERSONALIZE YOUR JARVIS</div>
+<div class="panel"><b>AI connection (optional)</b><p class="small">Connect your own secure backend endpoint. Never paste a private API key into this app. The server should accept POST JSON { "messages": [{"role":"user","content":"..."}] } and return { "reply":"..." }.</p><div class="row"><input class="field" id="endpoint" placeholder="https://your-server.example/chat"></div><button class="btn primary" id="saveEndpoint">SAVE AI ENDPOINT</button><p class="small" id="endpointInfo"></p></div>
+<div class="panel"><b>Add a search category</b><p class="small">Example: Scholarships, Coding tutorials, ECET updates, AI news, jobs, recipes, travel.</p><div class="row"><input class="field" id="catName" placeholder="Category name"></div><div class="row"><input class="field" id="catQuery" placeholder="Search template e.g. {query} scholarships India"></div><button class="btn primary" id="addCategory">＋ ADD CATEGORY</button><p class="small">Use {query} where your search words should go. Example: <code>{query} latest news India</code></p><div id="categoryList"></div></div>
+<div class="panel"><b>Voice settings</b><p class="small">Voice depends on the speech voices installed in your phone/browser. Choose a natural male voice if your device offers one.</p><div class="row"><select class="field" id="voiceSelect"><option value="">Default phone voice</option></select></div><button class="btn" id="testVoice">TEST VOICE</button></div>
+<div class="panel"><b>Personal data</b><p class="small">Your custom categories and settings are stored locally in this browser on this phone.</p><button class="btn" id="exportData">EXPORT SETTINGS</button> <button class="btn" id="resetData">RESET</button></div>
+</section>
+<footer>J.A.R.V.I.S. MOBILE • Personal assistant prototype • Your data stays on this device unless you use an AI endpoint or web search.</footer>
+</main>
+<script src="app.js"></script>
+</body></html>
